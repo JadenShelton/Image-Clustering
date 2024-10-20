@@ -1,0 +1,11 @@
+Example for gradle run -q --args="'input_files/correctfiles.txt' '3' '1'":
+0.857143 or 0.714286
+
+Example for gradle run -q --args="'input_files/correctfiles.txt' '3' '2'":
+0.857143 or 0.714286
+
+Example for gradle run -q --args="'input_files/correctfiles.txt' '4' '3'"
+1.000000 
+
+Example for gradle run -q --args="'input_files/correctfiles.txt' '3' '4'"
+0.857143 or 0.714286
