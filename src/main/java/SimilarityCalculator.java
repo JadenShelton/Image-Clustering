@@ -13,6 +13,8 @@ public abstract class SimilarityCalculator {
                 return new NormHist4Similarity();
             case 3:
                 return new InvSquareDiffSimilarity();
+            case 4:
+                return new NormHist9Similarity();
             default:
                 throw new IllegalArgumentException("Invalid similarity measure type.");
         }

@@ -36,8 +36,8 @@ public class CS_214_Project {
             }
 
             similarityMeasure = Integer.parseInt(similarityMeasureValue);
-            if(similarityMeasure <= 0 || similarityMeasure > 3) {
-                System.err.println("Error: The similarity measure value must be in range of 1 - 3");
+            if(similarityMeasure <= 0 || similarityMeasure > 4) {
+                System.err.println("Error: The similarity measure value must be in range of 1 - 4");
             }
 
             //store the image file paths in a list

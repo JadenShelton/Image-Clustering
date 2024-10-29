@@ -66,6 +66,14 @@ public class Cluster {
         return images.get(0).getQuarterHistograms()[index];
     }
 
+    public Histogram getNinthsHistograms(int index) {
+
+        if(images.isEmpty()) {
+            throw new IllegalArgumentException("Cluster has no images");
+        }
+        return images.get(0).getNinthsHistograms()[index];
+    }
+
     public double calculateSquaredDifference(Cluster other) {
         double sum = 0.0;
         for(Image img1 : this.images) {

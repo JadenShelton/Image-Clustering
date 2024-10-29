@@ -94,7 +94,7 @@ public class CS_214_Project_Tester {
         String[] args = {"input_files/correctfiles.txt", "4", "1"};
         CS_214_Project.main(args);
 
-        String expectedOutput = "example1.pgm example2.pgm\n" + "example3.pgm\n" + "example4.pgm example5.pgm\n" + "example6.pgm example7.pgm";
+        String expectedOutput = "1.000000";
         assertEquals(expectedOutput, outContent.toString().trim());
     }
 
@@ -104,7 +104,7 @@ public class CS_214_Project_Tester {
         String[] args = {"input_files/correctfiles.txt", "1", "1"};
         CS_214_Project.main(args);
 
-        String expected = "example1.pgm example2.pgm example3.pgm example4.pgm example5.pgm example6.pgm example7.pgm";
+        String expected = "0.285714";
         assertEquals(expected, outContent.toString().trim());
     }
 
@@ -114,7 +114,7 @@ public class CS_214_Project_Tester {
         String[] args = {"input_files/correctfiles.txt", "7", "1"};
         CS_214_Project.main(args);
 
-        String expectedOutput = "example1.pgm\n" + "example2.pgm\n" + "example3.pgm\n" + "example4.pgm\n" + "example5.pgm\n" + "example6.pgm\n" + "example7.pgm";
+        String expectedOutput = "1.000000";
         assertEquals(expectedOutput, outContent.toString().trim());
     }
 
@@ -123,7 +123,7 @@ public class CS_214_Project_Tester {
         String[] args = {"input_files/correctfiles.txt", "3", "2"};
         CS_214_Project.main(args);
 
-        String expected = "example1.pgm example2.pgm\n" + "example3.pgm\n" + "example4.pgm example5.pgm example6.pgm example7.pgm";
+        String expected = "0.714286";
         assertEquals(expected, outContent.toString().trim());
     }
 
@@ -132,10 +132,18 @@ public class CS_214_Project_Tester {
         String[] args = {"input_files/correctfiles.txt", "4", "3"};
         CS_214_Project.main(args);
 
-        String expected = "example1.pgm example2.pgm\nexample3.pgm\nexample4.pgm example5.pgm\nexample6.pgm example7.pgm";
+        String expected = "1.000000";
         assertEquals(expected, outContent.toString().trim());
     }
-    
+
+    @Test
+    public void testClusteringNormHist9_3Clusters() {
+        String[] args = {"input_files/correctfiles.txt", "3", "4"};
+        CS_214_Project.main(args);
+
+        String expected = "0.714286";
+        assertEquals(expected, outContent.toString().trim());
+    }
 
 
 }

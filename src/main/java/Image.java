@@ -9,6 +9,7 @@ public class Image {
     private Histogram normHistogram;
     private Histogram[] quarterHistograms;
     private int groundTruthValue;
+    private Histogram[] ninthsHistograms;
 
     public Image(File file) throws FileNotFoundException, InvalidImageFormatException {
         this.file = file;
@@ -20,6 +21,7 @@ public class Image {
         validateImage();
         normHistogram = new Histogram(histogram).normHist();
         createQuarterHistograms();
+        createNinthsHistograms();
         groundTruthValue = extractGroundTruthValue();
     }
 
@@ -108,6 +110,44 @@ public class Image {
         }
     }
 
+    private void createNinthsHistograms() {
+        double[][] nineBins = new double[9][64]; //9 seperate groups of 64 bins to split image into ninths
+
+        //loop throug the entire image asigning each pixel to the correct ninth and bin in that ninth
+        for(int x = 0; x < 128; ++x) {
+            for(int y = 0; y < 128; ++y) {
+                int pixelValue = pixels[x][y];
+                int bin = pixelValue / 4;
+
+                //for ninths histogram we determine what ninth histogram the pixel belongs to as well
+                if(x < 43 && y < 43) { //bottom left
+                    nineBins[0][bin]++;
+                } else if(x >= 43 && x < 86 && y < 43) { //bottom middle
+                    nineBins[1][bin]++;
+                } else if(x >= 86 && y < 43) {  //bottom right
+                    nineBins[2][bin]++;
+                } else if(x < 43 && y >= 43 && y < 86) { //middle left
+                    nineBins[3][bin]++;
+                } else if(x >= 43 && x < 86 && y >= 43 && y < 86) { //middle middle
+                    nineBins[4][bin]++;
+                } else if(x >= 86 && y >= 43 && y < 86) {  //middle right
+                    nineBins[5][bin]++;
+                } else if(x < 43 && y >= 86) { //middle left
+                    nineBins[6][bin]++;
+                } else if(x >= 43 && x < 86 && y >= 86) { //middle middle
+                    nineBins[7][bin]++;
+                } else {  //top right
+                    nineBins[8][bin]++;
+                }
+            }
+        }
+
+        ninthsHistograms = new Histogram[9]; //create histogram objects for each ninth normalize them and add the to the collection of ninths histograms stored by image
+        for(int i = 0; i < 9; ++i) {
+            ninthsHistograms[i] = new Histogram(nineBins[i]).normHist();
+        }
+    }
+
     //calculates the squared difference for InvSquareDiffSimilarity
     public double calculateSquaredDifference(Image other) {
         double sum = 0.0;
@@ -147,6 +187,10 @@ public class Image {
 
     public Histogram[] getQuarterHistograms() {
         return quarterHistograms;
+    }
+
+    public Histogram[] getNinthsHistograms() {
+        return ninthsHistograms;
     }
 
     public String getFileName() {
