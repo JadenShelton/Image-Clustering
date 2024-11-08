@@ -2,9 +2,22 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controls all the processes of Clustering a set of images.
+ * Also provides methods for varifying the accuracy of those clusterings if the given Image filnames are formated to contain a ground truth value.
+ * 
+ * The class implements an agglomerative (bottom up) clustering approach where clusters are merged until a target number of clusters is reached.
+ */
 public class ClusterManager {
     private List<Cluster> clusters;
 
+    /**
+     * Contructs a new Cluster Manager containing a list of Image Clusters.
+     * Populates the list of clusters by creating one cluster representation of every image in the given list.
+     * To prepare for the clustering process.
+     * 
+     * @param images the List of images to be clustered for comparison
+     */
     public ClusterManager(List<Image> images) {
         clusters = new ArrayList<>();
         for(Image img : images) {
@@ -12,6 +25,16 @@ public class ClusterManager {
         }
     }
 
+    /**
+     * Performs clustering by merging the most similar clusters together
+     * unitl the targe number of clusters is reached.
+     * 
+     * The method uses a similarity calculator class to determine the similarity between two clusters
+     * and merges the pair with the highest similarity value in each iteration.
+     * 
+     * @param targetK
+     * @param calculator
+     */
     public void performClustering(int targetK, SimilarityCalculator calculator) {
         while(clusters.size() > targetK) {
             double maxSimilarity = -1.0;
@@ -41,6 +64,11 @@ public class ClusterManager {
         }
      }
 
+     /**
+      * Evaluates the quality of the clustering by comparing each cluster groupings ground truch values.
+      *
+      * @return a double representing the correctness of the grouping 1.0 is perfect, the higher the score the better the clustering.
+      */
      public double clusterQualityEvaluation() {
         int totalImages = 0;
         int correctlySortedImages = 0; //count of images that are correctly grouped based on truth value
@@ -70,6 +98,13 @@ public class ClusterManager {
         return (double) correctlySortedImages / totalImages;
      }
 
+     /**
+      * Finds the most common ground truth value within a list of truth values from a clustering.
+      * Determines the primary category of cluster in order to measure the quality of that clustering.
+      *
+      * @param truthValues List of integer truth values provided by the image filenames
+      * @return the dominant truth value in the list
+      */
      public int findDominantCategory(List<Integer> truthValues) {
         int maxCount = 0;
         int dominantTruthValue = truthValues.get(0);
@@ -91,6 +126,11 @@ public class ClusterManager {
         return dominantTruthValue;
      }
 
+     /**
+      * Retrieves the current list of clusters within the cluster manager
+      *
+      * @return List of Cluster objects showing the current clustering state
+      */
      public List<Cluster> getClusters() {
         return clusters;
      }

@@ -2,6 +2,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Represents a Image given an Image file. 
+ * Maintains all the relevent data to that specific image for comparisons.
+ * Provides the functionality for validating an image file, storing individual pixel values,
+ * creating and storing different histogram variations of the image. Also provides methods used
+ * in comparisons.
+ * 
+ */
 public class Image {
     private File file; 
     private int[][] pixels; //need to store image as pixel values in a 2D array for quarter histograms
@@ -11,6 +19,16 @@ public class Image {
     private int groundTruthValue;
     private Histogram[] ninthsHistograms;
 
+    /**
+     * Constructs a new Image object given a image file.
+     * 
+     * Checks that files exists before proceeding. Then validates the Image and creates Histogram representations of the Image,
+     * also assumes the image filename contains a ground truth value for what group it should eventually be clustered in.
+     * 
+     * @param file The image file for the Image object
+     * @throws FileNotFoundException Throws exception if the given image file name can not be found.
+     * @throws InvalidImageFormatException Throws exception if the image file given is not the right format for comparions. (Must be PGM)
+     */
     public Image(File file) throws FileNotFoundException, InvalidImageFormatException {
         this.file = file;
         if(!file.exists()) {
@@ -25,6 +43,13 @@ public class Image {
         groundTruthValue = extractGroundTruthValue();
     }
 
+    /**
+     * Validates the file that it is a valid image. Checks contents, format, width, height, and pixel values.
+     * Also stores pixel values in a 2d array while checking them for histogram creation. Creates a base histogram once all validation is completed.
+     * 
+     * @throws InvalidImageFormatException Throws exception if the file fails any of the validation checks.
+     * @throws FileNotFoundException Throws exception if the given file is not able to be found.
+     */
     private void validateImage() throws InvalidImageFormatException, FileNotFoundException {
         try (Scanner scanner = new Scanner(file)) {
             //Make sure file is not empty and that it is a pgm file type
@@ -68,7 +93,9 @@ public class Image {
         }
     }
 
-    //creates a basic histogram of the image
+    /**
+     * Creates a histogram by iterating through all the pixel values and sorting them into values in a 64 bin histogram.
+     */
     private void createHistogram() {
         //pixel values from 0 - 255 divided into 64 bins for histogram
         this.histogram = new double[64];
@@ -82,6 +109,11 @@ public class Image {
         }
     }
 
+    /**
+     * Creates 2D array to create 4 histograms to split the image into 4 seperate quarters for a better comparison methods.
+     * 
+     * Iterates through entire images pixel values and then sorts them into the approriate bins based on location of pixel, creates 4 normalized histograms.
+     */
     private void createQuarterHistograms() {
         double[][] quarterBins = new double[4][64]; //4 seperate groupd of 64 bins to split image into seperate quarters
 
@@ -110,6 +142,11 @@ public class Image {
         }
     }
 
+    /**
+     * Creates 2D array to create 9 seperate histograts to split the image inot ninths for another better image comparison method. 
+     * 
+     * Iterates through the entire array of pixels and divides the image up into 9 almost equal sections for 9 seperate normalized histograms.
+     */
     private void createNinthsHistograms() {
         double[][] nineBins = new double[9][64]; //9 seperate groups of 64 bins to split image into ninths
 
@@ -148,7 +185,13 @@ public class Image {
         }
     }
 
-    //calculates the squared difference for InvSquareDiffSimilarity
+    /**
+     * Calculates the squared difference between the image and a given image. For the InvSpuareDiffSimilarity compariosn method.
+     * 
+     * Iterates through the pixel values of both images and subtracts the pixel value of this image from the other image and sums up those differences squared.
+     * @param other The other image for difference evaluation.
+     * @return Double value that is the sum of the differences between the the pixel values squared.
+     */
     public double calculateSquaredDifference(Image other) {
         double sum = 0.0;
 
@@ -161,6 +204,14 @@ public class Image {
         return sum;
     }
 
+    /**
+     * Retrieves the pixel value of the image at the given coordinates.
+     * 
+     * @param x X location of pixel
+     * @param y Y location of pixel
+     * @return The int pixel value at the given coordinates.
+     * @throws IllegalArgumentException Throws exception if the coordiantes are out of bounds.
+     */
     public int getPixelValue(int x, int y) {
         if(x < 0 || x >= 128 || y < 0 || y >= 128) {
             throw new IllegalArgumentException("Coordinates out of bounds!");
@@ -168,31 +219,66 @@ public class Image {
         return pixels[x][y];
     }
 
+    /**
+     * Finds the number representing the ground truth value of the image given that the file name is in a specific format.
+     * 
+     * @return The int that represents the ground truth value of a file.
+     */
     private int extractGroundTruthValue() {
         String truthValue = file.getName().substring(5, file.getName().indexOf("_"));
         return Integer.parseInt(truthValue);
     }
 
+    /**
+     * Retrieves the ground truth value.
+     * 
+     * @return The int value representing the ground truth value of the image.
+     */
     public int getGroundTruthValue() {
         return groundTruthValue;
     }
 
+    /**
+     * Retrieves the base Histogram of this image.
+     * 
+     * @return The double array that contains the data for the Histogram of the image.
+     */
     public double[] getHistogram() {
         return histogram;
     }
 
+    /**
+     * Retrieves the normalized histogram of this image.
+     * 
+     * @return The Histogram object that contains the data for the normalized Histogram of the image.
+     */
     public Histogram getNormHistogram() {
         return normHistogram;
     }
 
+    /**
+     * Retrieves the array of Histogram objects that contains the data for four quarter histograms of the image.
+     * 
+     * @return The Histogram array containing the data for four quarter histograms of the image.
+     */
     public Histogram[] getQuarterHistograms() {
         return quarterHistograms;
     }
 
+    /**
+     * The Histogram array containing the data for nine histograms that make up the image.
+     * 
+     * @return The Histogram array containing the data for nine histograms that make up the image.
+     */
     public Histogram[] getNinthsHistograms() {
         return ninthsHistograms;
     }
 
+    /**
+     * Retrieves the filename of the image.
+     * 
+     * @return The string containing the filename of the image.
+     */
     public String getFileName() {
         return file.getName();
     }
