@@ -11,7 +11,7 @@ public class Histogram {
     private double[] bins;
 
     /**
-     * Constructs a Histogram object given a double array of a histogram.
+     * Constructs (a Histogram object given a double array of a histogram.
      * 
      * @param bins The array storing the histogram values
      */
