@@ -31,13 +31,14 @@ public class CS_214_Project {
             //check for valid K value
             K = Integer.parseInt(kValue);
             if (K <= 0) {
-                System.err.println("Error: K must be greater than zero");
+                System.err.print("Error: K must be greater than zero");
                 return;
             }
 
             similarityMeasure = Integer.parseInt(similarityMeasureValue);
             if(similarityMeasure <= 0 || similarityMeasure > 4) {
                 System.err.println("Error: The similarity measure value must be in range of 1 - 4");
+                return;
             }
 
             //store the image file paths in a list

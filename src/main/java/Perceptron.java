@@ -16,21 +16,15 @@ public class Perceptron {
             for(Image image : images) {
                 double histogram[] = image.getNormHistogram().getBins();
 
-                int d;
-                
-                if(image.getGroundTruthValue() == classNumber) {
-                    d = 1;
-                } else {
-                    d = -1;
-                }
+                int desiredOutput = (image.getGroundTruthValue() == classNumber) ? 1 : -1;
 
-                double perceptronValue = perceptronEvaluation(histogram);
+                double output = perceptronEvaluation(histogram);
 
-                double weightAndBiasAdjustment = (d - perceptronValue);
+                double weightAndBiasAdjustment = (desiredOutput - output); // (d - y)
                 for(int i = 0; i < 64; ++i) {
-                    weights[i] = weightAndBiasAdjustment * histogram[i];
+                    weights[i] += weightAndBiasAdjustment * histogram[i]; //w[i] <- w[i] + (d-y) * h[i]
                 }
-                bias += weightAndBiasAdjustment;
+                bias += weightAndBiasAdjustment; // b <- b + (d - y)
             }
         }
     }
@@ -40,13 +34,26 @@ public class Perceptron {
             throw new IllegalArgumentException("Histogram must be a size of 64");
         }
 
-        double sum = bias;
-
+        // y = b + w[i] * h[i]
+        double sum = bias; // y + b
         for(int i = 0; i < 64; ++i) {
-            sum = weights[i] * histogram[i];
+            sum += weights[i] * histogram[i]; //sum of all weights multipled by all hsitogram values
         }
 
         return sum;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        //all 64 weights in one line
+        for(Double weight : weights) {
+            sb.append(String.format("%.6f", weight)).append(" ");
+        }
+        //bias at the end
+        sb.append(String.format("%.6f", bias)).append(" ");
+
+        return sb.toString();
     }
 
 }
