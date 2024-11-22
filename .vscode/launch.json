@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "CS_214_Project",
+            "request": "launch",
+            "mainClass": "CS_214_Project",
+            "projectName": "Image-Clustering"
+        },
+        {
+            "type": "java",
+            "name": "CS_214_Project34",
+            "request": "launch",
+            "mainClass": "CS_214_Project",
+            "projectName": "Image-Clustering",
+            "args": "'input_files/correctfiles.txt' '3' '4'"
+        }
+    ]
+}

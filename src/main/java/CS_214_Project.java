@@ -1,6 +1,4 @@
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -15,6 +13,9 @@ public class CS_214_Project {
      * @param args
      */
     public static void main(String[] args){
+        //for checking run time lab
+        long start = System.currentTimeMillis();
+
         //check for valid arguments
         if(args.length != 3) {
             System.err.println("Error: two argumens required - <input_file> <K>");
@@ -63,7 +64,9 @@ public class CS_214_Project {
         } catch (InvalidImageFormatException e) {
             System.err.println("Error: " + e.getMessage());
         }
-
+        //measuring runtime
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
     }
 }
 
