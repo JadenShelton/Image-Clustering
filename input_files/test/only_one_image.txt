@@ -1,0 +1,1 @@
+input_files/test/class0_1.pgm

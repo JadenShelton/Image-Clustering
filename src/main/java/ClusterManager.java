@@ -46,6 +46,7 @@ public class ClusterManager {
                 for(int j = i + 1; j < clusters.size(); ++j) { //nested for loop compares each image cluster to each other
                     BigDecimal similarity = calculator.calculateSimilarity(clusters.get(i),clusters.get(j)); //compares the normalized histograms of the clusters at index i and j gives a similarity value
                     double simValue = similarity.doubleValue(); //converts big decimal into a double
+                    
                     if(simValue > maxSimilarity) { //if it is more similar than previously compared cluster than replace it as most similar
                         maxSimilarity = simValue;
                         mergeIndex1 = i;            //track the most similar clusters for merge
@@ -79,7 +80,7 @@ public class ClusterManager {
             
             List<Integer> truthValues = new ArrayList<>(); //store all the truth values of the images in this cluster
             for(Image img : cluster.getImages()) {
-                truthValues.add(img.getGroundTruthValue());
+                truthValues.add(img.getClassNumber());
             }
 
             int dominantTruthValue = findDominantCategory(truthValues);
@@ -87,7 +88,7 @@ public class ClusterManager {
             //count number of images with the dominant truth value
             int matchingImages = 0;
             for(Image img : clusterImages) {
-                if(img.getGroundTruthValue() == dominantTruthValue) {
+                if(img.getClassNumber() == dominantTruthValue) {
                     matchingImages++;
                 }
             }

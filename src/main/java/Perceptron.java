@@ -16,7 +16,7 @@ public class Perceptron {
             for(Image image : images) {
                 double histogram[] = image.getNormHistogram().getBins();
 
-                int desiredOutput = (image.getGroundTruthValue() == classNumber) ? 1 : -1;
+                int desiredOutput = (image.getClassNumber() == classNumber) ? 1 : -1; //if the images class number matches the class number we are training to set ouput num to 1 else -1
 
                 double output = perceptronEvaluation(histogram);
 
@@ -37,7 +37,7 @@ public class Perceptron {
         // y = b + w[i] * h[i]
         double sum = bias; // y + b
         for(int i = 0; i < 64; ++i) {
-            sum += weights[i] * histogram[i]; //sum of all weights multipled by all hsitogram values
+            sum += weights[i] * histogram[i]; //sum of all weights multiplied by all histogram values
         }
 
         return sum;

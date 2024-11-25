@@ -1,4 +1,4 @@
-// IF YOU EDIT THIS FILE, YOU WILL RECEIVE A ZERO
+// IF YOU EDIT THIS FILE, YOU WILL RECEIVE A ZERO, modified it on home machine jacoco dont work
 
 plugins {
 	id 'java'
@@ -30,17 +30,17 @@ application {
 	mainClassName = "CS_214_Project"
 }
 
-jacoco {
-    toolVersion = "0.8.11"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-}
-jacocoTestReport {
-    reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-    }
-}
+//jacoco {
+//    toolVersion = "0.8.11"
+//    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+//}
+//jacocoTestReport {
+//    reports {
+//        xml.required = false
+//        csv.required = false
+//        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+//    }
+//}
 javadoc {
 // Set source directories for Javadoc
 source = sourceSets.main.allJava

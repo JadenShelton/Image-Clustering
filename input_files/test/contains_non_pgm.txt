@@ -1,0 +1,1 @@
+input_files/test/not_an_image.txt

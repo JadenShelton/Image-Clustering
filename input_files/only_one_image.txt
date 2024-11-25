@@ -1,2 +1,0 @@
-input_files/class1_1.pgm
-

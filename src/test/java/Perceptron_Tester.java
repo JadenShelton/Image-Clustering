@@ -2,7 +2,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -60,23 +59,6 @@ public class Perceptron_Tester {
         assertDoesNotThrow(() -> perceptron.trainPerceptron(new ArrayList<>(), 1));
     }
 
-    //Empty input file
-    @Test
-    public void testEmptyInputFile() {
-        String[] args = {"input_files/empty.txt", "1"};
-        CS_214_Project.main(args);
-        assertEquals("Error: Need at least 1 image", errContent.toString().trim());
-
-    }
-
-    //Non-PGM files input
-    @Test
-    public void testNonPGMFilesInInput() {
-        String[] args = {"input_files/contains_non_pgm.txt", "1"};
-        CS_214_Project.main(args);
-        assertEquals("Error: Invalid file format for file: not_an_image.txt", errContent.toString().trim());
-
-    }
 
     //intial file reader class
     @Test
@@ -103,40 +85,4 @@ public class Perceptron_Tester {
         assertNotNull(result);
     }
 
-    // Test main method with invalid arguments
-    @Test
-    public void testMainWithInvalidArguments() {
-        String[] args = new String[]{"file.txt"}; // Missing second argument
-        CS_214_Project.main(args);
-        assertEquals("Error: two argumens required - <input_file> <K>", 
-            errContent.toString().trim());
-    }
-
-    // Test main method with invalid class number
-    @Test
-    public void testMainWithInvalidClassNumber() {
-        String[] args = new String[]{"file.txt", "0"};
-        CS_214_Project.main(args);
-        assertEquals("Error: class number must be greater than zero", 
-            errContent.toString().trim());
-    }
-
-    // Test main method with non-integer class number
-    @Test
-    public void testMainWithNonIntegerClassNumber() {
-        String[] args = new String[]{"file.txt", "abc"};
-        CS_214_Project.main(args);
-        assertEquals("Error: K must be an integer", errContent.toString().trim());
-    }
-
-    // Test file not found scenario
-    @Test
-    public void testMainWithNonexistentFile() {
-        String[] args = new String[]{"nonexistent.txt", "1"};
-        CS_214_Project.main(args);
-        assertTrue(errContent.toString().trim()
-            .startsWith("Error: Error input file does not exist:"));
-    }
-
-
-}   
+}

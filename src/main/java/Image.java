@@ -16,7 +16,7 @@ public class Image {
     private double[] histogram;
     private Histogram normHistogram;
     private Histogram[] quarterHistograms;
-    private int groundTruthValue;
+    private int classNumber;
     private Histogram[] ninthsHistograms;
 
     /**
@@ -40,7 +40,7 @@ public class Image {
         normHistogram = new Histogram(histogram).normHist();
         createQuarterHistograms();
         createNinthsHistograms();
-        groundTruthValue = extractGroundTruthValue();
+        classNumber = extractClassNumber();
     }
 
     /**
@@ -53,7 +53,7 @@ public class Image {
     private void validateImage() throws InvalidImageFormatException, FileNotFoundException {
         try (Scanner scanner = new Scanner(file)) {
             //Make sure file is not empty and that it is a pgm file type
-            if (!scanner.hasNext() || !scanner.next().equals("P3")) {
+            if (!scanner.hasNext() || !scanner.next().equals("P2")) {
                 throw new InvalidImageFormatException("Invalid file format for file: " + file.getName());
             }
 
@@ -86,6 +86,15 @@ public class Image {
                         throw new InvalidImageFormatException("Incorrect number of pixels in file: " + file.getName());
                     }
                 }
+            }
+            
+            //corrupted image check
+            int totalPixels = 0;
+            for(int[] pixelRow : pixels) {
+                totalPixels += pixelRow.length;
+            }
+            if(totalPixels != 128*128){
+                throw new InvalidImageFormatException("Corrupted Image invalid number of pixels in file: " + file.getName());
             }
 
             //all validation has passed so begin computing image histogram
@@ -220,22 +229,22 @@ public class Image {
     }
 
     /**
-     * Finds the number representing the ground truth value of the image given that the file name is in a specific format.
+     * Finds the number representing the class number of the image given that the file name is in a specific format.
      * 
-     * @return The int that represents the ground truth value of a file.
+     * @return The int that represents the class number of a file.
      */
-    private int extractGroundTruthValue() {
+    private int extractClassNumber() {
         String truthValue = file.getName().substring(5, file.getName().indexOf("_"));
         return Integer.parseInt(truthValue);
     }
 
     /**
-     * Retrieves the ground truth value.
+     * Retrieves the class number.
      * 
-     * @return The int value representing the ground truth value of the image.
+     * @return The int value representing the class number of the image.
      */
-    public int getGroundTruthValue() {
-        return groundTruthValue;
+    public int getClassNumber() {
+        return classNumber;
     }
 
     /**

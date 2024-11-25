@@ -14,7 +14,7 @@ public abstract class SimilarityCalculator {
      * @param measureType The int value from the input that represents the wanted similarity measure to be used by the user.
      * @return The BigDecimal similarity measure that is between 1.0 and 0.0.
      */
-    public static SimilarityCalculator createCalculator(int measureType) {
+    public static SimilarityCalculator createCalculator(int measureType, PerceptronManager perceptronManager) {
         switch (measureType) {
             case 1:
                 return new NormHistSimilarity();
@@ -24,6 +24,8 @@ public abstract class SimilarityCalculator {
                 return new InvSquareDiffSimilarity();
             case 4:
                 return new NormHist9Similarity();
+            case 5:
+                return new PerceptronSimilarity(perceptronManager);
             default:
                 throw new IllegalArgumentException("Invalid similarity measure type.");
         }

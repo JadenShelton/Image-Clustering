@@ -1,0 +1,2 @@
+input_files/test/class0_2.pgm
+input_files/test/invalid_image.pgm
