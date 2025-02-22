@@ -1,12 +1,12 @@
 # 🖼️ Image Clustering Project
 
-## 📝 Overview
+## Overview
 
 > A Java application that processes PGM (Portable Gray Map) images and groups them into clusters based on various similarity measures. The project supports both standard clustering modes and perceptron-based clustering for more advanced image analysis.
 
 ---
 
-## ✨ Features
+## Features
 
 - **Multiple Similarity Measures** for image comparison
 - **Dual Mode Support**
@@ -26,7 +26,7 @@
 
 ---
 
-## 📥 Installation
+## Installation
 
 1. **Clone the repository:**
    ```bash
@@ -45,7 +45,7 @@
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### Standard Clustering Mode
 
@@ -94,19 +94,19 @@ Your input files should follow this format:
 
 ---
 
-## ⚠️ Error Handling
+## Error Handling
 
 The program handles various errors including:
 
-- ❌ Invalid number of arguments
-- ❌ Invalid K values
-- ❌ File not found exceptions
-- ❌ Invalid image format
-- ❌ Invalid similarity measure values
+- Invalid number of arguments
+- Invalid K values
+- File not found exceptions
+- Invalid image format
+- Invalid similarity measure values
 
 ---
 
-## 📊 Output
+## Output
 
 The program outputs clusters to standard output:
 ```
@@ -117,7 +117,7 @@ Cluster 3: [image3.pgm, image6.pgm]
 
 ---
 
-## 📐 Similarity Measures
+## Similarity Measures
 
 | Measure | Description |
 |---------|-------------|
